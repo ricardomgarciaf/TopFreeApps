@@ -6,10 +6,12 @@ import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -32,6 +34,8 @@ public class Apps extends AppCompatActivity {
         Intent intent= getIntent();
         Bundle b=intent.getExtras();
 
+        TextView title= (TextView) findViewById(R.id.titleCategory);
+        title.setText(b.getString(CategoryAdapter.CATEGORY).toUpperCase());
         new RetrieveFromDatabase().execute(b.getString(CategoryAdapter.CATEGORY));
 
 
