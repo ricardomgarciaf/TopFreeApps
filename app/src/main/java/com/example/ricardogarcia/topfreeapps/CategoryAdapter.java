@@ -3,16 +3,11 @@ package com.example.ricardogarcia.topfreeapps;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
+ * Adapter used to show the grid/list of categories with its name and image
  * Created by ricardogarcia on 1/15/16.
  */
 public class CategoryAdapter extends BaseAdapter {
@@ -68,8 +64,8 @@ public class CategoryAdapter extends BaseAdapter {
 
             if (categories.get(position).getLogo() != null)
                 vholder.image.setImageBitmap(BitmapFactory.decodeByteArray(categories.get(position).getLogo(), 0, categories.get(position).getLogo().length));
-            else{
-                Drawable myIcon = activity.getResources().getDrawable( R.drawable.category_effect);
+            else {
+                Drawable myIcon = activity.getResources().getDrawable(R.drawable.category_effect);
                 if (android.os.Build.VERSION.SDK_INT >= 16)
                     vholder.image.setBackground(myIcon);
                 else
@@ -83,7 +79,7 @@ public class CategoryAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent= new Intent(activity,Apps.class);
+                    Intent intent = new Intent(activity, Apps.class);
                     intent.putExtra(CATEGORY, categories.get(position).getName());
                     activity.startActivity(intent);
                 }

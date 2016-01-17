@@ -5,16 +5,16 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
+/*
+    Activity that shows the total description of an application
+ */
 public class AppDescription extends AppCompatActivity {
 
     private App app;
@@ -29,26 +29,24 @@ public class AppDescription extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_description);
 
-        if(getResources().getBoolean(R.bool.portrait_mode)){
+        if (getResources().getBoolean(R.bool.portrait_mode)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }else{
+        } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
 
-        Intent intent= getIntent();
-        Bundle b=intent.getExtras();
-
+        Intent intent = getIntent();
         app = (App) intent.getSerializableExtra(AppAdapter.APP);
 
-        TextView nameApp= (TextView) findViewById(R.id.nameApp);
-        TextView categoryApp= (TextView) findViewById(R.id.categoryApp);
+        TextView nameApp = (TextView) findViewById(R.id.nameApp);
+        TextView categoryApp = (TextView) findViewById(R.id.categoryApp);
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        TextView summaryApp= (TextView) findViewById(R.id.summaryApp);
+        TextView summaryApp = (TextView) findViewById(R.id.summaryApp);
 
         nameApp.setText(app.getName());
         categoryApp.setText(app.getCategory());
 
-        if(app.getLarge()!=null){
+        if (app.getLarge() != null) {
             imageView.setImageBitmap(BitmapFactory.decodeByteArray(app.getLarge(), 0, app.getLarge().length));
         }
         summaryApp.setText(app.getSummary());
@@ -80,15 +78,15 @@ public class AppDescription extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        TextView nameApp= (TextView) findViewById(R.id.nameApp);
-        TextView categoryApp= (TextView) findViewById(R.id.categoryApp);
+        TextView nameApp = (TextView) findViewById(R.id.nameApp);
+        TextView categoryApp = (TextView) findViewById(R.id.categoryApp);
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        TextView summaryApp= (TextView) findViewById(R.id.summaryApp);
+        TextView summaryApp = (TextView) findViewById(R.id.summaryApp);
 
         outState.putString(APP_NAME, nameApp.getText().toString());
-        outState.putString(APP_CATEGORY,categoryApp.getText().toString());
+        outState.putString(APP_CATEGORY, categoryApp.getText().toString());
         outState.putParcelable(APP_IMAGE, ((BitmapDrawable) imageView.getDrawable()).getBitmap());
-        outState.putString(APP_SUMMARY,summaryApp.getText().toString());
+        outState.putString(APP_SUMMARY, summaryApp.getText().toString());
 
         super.onSaveInstanceState(outState);
     }
@@ -97,10 +95,10 @@ public class AppDescription extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         Bitmap bitmap;
-        TextView nameApp= (TextView) findViewById(R.id.nameApp);
-        TextView categoryApp= (TextView) findViewById(R.id.categoryApp);
+        TextView nameApp = (TextView) findViewById(R.id.nameApp);
+        TextView categoryApp = (TextView) findViewById(R.id.categoryApp);
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        TextView summaryApp= (TextView) findViewById(R.id.summaryApp);
+        TextView summaryApp = (TextView) findViewById(R.id.summaryApp);
 
         nameApp.setText(savedInstanceState.getString(APP_NAME));
         categoryApp.setText(savedInstanceState.getString(APP_CATEGORY));

@@ -5,22 +5,16 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import org.apache.http.util.ByteArrayBuffer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,8 +28,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 
+/*
+    Launcher activity that loads the information from the url into the database
+ */
 
 public class Splash extends AppCompatActivity {
 
@@ -46,9 +42,9 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        if(getResources().getBoolean(R.bool.portrait_mode)){
+        if (getResources().getBoolean(R.bool.portrait_mode)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }else{
+        } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
 
@@ -79,9 +75,13 @@ public class Splash extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+        Fetchs the data from the URL in case there is connection to the Internet, updating those records that
+        are not in the DB
+     */
     private class FetchData extends AsyncTask<Void, Void, Boolean> {
 
-        private ProgressBar prog= (ProgressBar) findViewById(R.id.pb);
+        private ProgressBar prog = (ProgressBar) findViewById(R.id.pb);
         HttpURLConnection urlConnection;
         StringBuilder json_result = new StringBuilder();
 
@@ -143,124 +143,10 @@ public class Splash extends AppCompatActivity {
                         JSONObject attributes = category.optJSONObject("attributes");
                         String label_category = attributes.optString("label");
 
-                        /*
-                        ByteArrayOutputStream baos;
-                        Bitmap bitmap;
-                        byte[] logo;
-                        switch (label_category) {
-                            case "Games":
-                                baos = new ByteArrayOutputStream();
-                                if(android.os.Build.VERSION.SDK_INT <= 21)
-                                    bitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                else
-                                    bitmap = ((BitmapDrawable) getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                                logo = baos.toByteArray();
-                                break;
-                            case "Social Networking":
-                                baos = new ByteArrayOutputStream();
-                                if(android.os.Build.VERSION.SDK_INT <= 21)
-                                    bitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                else
-                                    bitmap = ((BitmapDrawable) getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                                logo = baos.toByteArray();
-                                break;
-                            case "Photo & Video":
-                                baos = new ByteArrayOutputStream();
-                                if(android.os.Build.VERSION.SDK_INT <= 21)
-                                    bitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                else
-                                    bitmap = ((BitmapDrawable) getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                                logo = baos.toByteArray();
-                                break;
-                            case "Education":
-                                baos = new ByteArrayOutputStream();
-                                if(android.os.Build.VERSION.SDK_INT <= 21)
-                                    bitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                else
-                                    bitmap = ((BitmapDrawable) getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                                logo = baos.toByteArray();
-                                break;
-                            case "Music":
-                                baos = new ByteArrayOutputStream();
-                                if(android.os.Build.VERSION.SDK_INT <= 21)
-                                    bitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                else
-                                    bitmap = ((BitmapDrawable) getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                                logo = baos.toByteArray();
-                                break;
-                            case "Entertainment":
-                                baos = new ByteArrayOutputStream();
-                                if(android.os.Build.VERSION.SDK_INT <= 21)
-                                    bitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                else
-                                    bitmap = ((BitmapDrawable) getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                                logo = baos.toByteArray();
-                                break;
-                            case "Lifestyle":
-                                baos = new ByteArrayOutputStream();
-                                if(android.os.Build.VERSION.SDK_INT <= 21)
-                                    bitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                else
-                                    bitmap = ((BitmapDrawable) getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                                logo = baos.toByteArray();
-                                break;
-                            case "Shopping":
-                                baos = new ByteArrayOutputStream();
-                                if(android.os.Build.VERSION.SDK_INT <= 21)
-                                    bitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                else
-                                    bitmap = ((BitmapDrawable) getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                                logo = baos.toByteArray();
-                                break;
-                            default:
-                                baos = new ByteArrayOutputStream();
-                                if(android.os.Build.VERSION.SDK_INT <= 21)
-                                    bitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                else
-                                    bitmap = ((BitmapDrawable) getDrawable(R.mipmap.ic_launcher)).getBitmap();
-                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                                logo = baos.toByteArray();
-                                break;
-                        }
-                        */
 
                         if (!db.isCategoryInserted(label_category))
-                            db.addCategory(new Category(label_category,null));
+                            db.addCategory(new Category(label_category, null));
 
-                        /*
-                        byte[] byteArray = null, byteArray1 = null, byteArray2 = null;
-                        try {
-                            InputStream in = new URL(dir_images[0]).openStream();
-                            Bitmap bmp = BitmapFactory.decodeStream(in);
-                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                            byteArray = stream.toByteArray();
-
-                            InputStream in1 = new URL(dir_images[1]).openStream();
-                            Bitmap bmp1 = BitmapFactory.decodeStream(in1);
-                            ByteArrayOutputStream stream1 = new ByteArrayOutputStream();
-                            bmp1.compress(Bitmap.CompressFormat.PNG, 100, stream1);
-                            byteArray1 = stream1.toByteArray();
-
-                            InputStream in2 = new URL(dir_images[2]).openStream();
-                            Bitmap bmp2 = BitmapFactory.decodeStream(in2);
-                            ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
-                            bmp2.compress(Bitmap.CompressFormat.PNG, 100, stream2);
-                            byteArray2 = stream2.toByteArray();
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        */
                         if (!db.isAppInserted(label_name)) {
                             App app = new App(label_name, label_category, label_summary, getImageFromURL(dir_images[0]), getImageFromURL(dir_images[1]), getImageFromURL(dir_images[2]));
                             db.addApp(app);
@@ -306,6 +192,9 @@ public class Splash extends AppCompatActivity {
 
     }
 
+    /*
+        Checks if there is access to internet in order to load information from the url
+     */
     private boolean isNetworkAvailable() {
 
         ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext()
@@ -315,41 +204,6 @@ public class Splash extends AppCompatActivity {
             return true;
         else
             return false;
-
-
-        /*
-        ConnectivityManager cm =
-                (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        if(cm!=null)
-            Log.d("NOT NULL","NOT NULL");
-        else
-            Log.d("NULL", "NULL");
-
-        if (cm.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
-                cm.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTING ||
-                cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
-                cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED) {
-
-            // if connected with internet
-            return true;
-
-        } else if (
-                cm.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||
-                        cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED) {
-
-            return false;
-        }
-        return false;
-        */
-        /*
-        ConnectivityManager cm =
-                (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-        return isConnected;*/
 
     }
 

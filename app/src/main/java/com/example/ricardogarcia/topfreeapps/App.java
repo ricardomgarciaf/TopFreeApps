@@ -1,12 +1,12 @@
 package com.example.ricardogarcia.topfreeapps;
 
 import java.io.Serializable;
-import java.sql.Blob;
 
 /**
+ * Represents an application with its name, category, summary and images
  * Created by ricardogarcia on 1/14/16.
  */
-public class App implements Serializable{
+public class App implements Serializable {
 
     String name;
     String category;

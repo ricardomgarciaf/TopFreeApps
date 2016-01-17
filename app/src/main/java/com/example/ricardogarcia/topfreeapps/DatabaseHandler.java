@@ -6,15 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.util.Log;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
+ * Class that extends from SQLiteOpenHelper used to create, insert, update the tables from the database
  * Created by ricardogarcia on 1/14/16.
  */
 public class DatabaseHandler extends SQLiteOpenHelper {
@@ -30,16 +26,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TABLE_APPS = "app";
 
     //Category Table Columns
-    private static final String CATEGORY_NAME="name";
-    private static final String CATEGORY_LOGO="logo";
+    private static final String CATEGORY_NAME = "name";
+    private static final String CATEGORY_LOGO = "logo";
 
     //App Table Columns
-    private static final String APP_NAME="name";
-    private static final String APP_CATEGORY="category";
-    private static final String APP_SUMMARY="summary";
-    private static final String APP_IMAGE_SMALL="small";
-    private static final String APP_IMAGE_MEDIUM="medium";
-    private static final String APP_IMAGE_LARGE="large";
+    private static final String APP_NAME = "name";
+    private static final String APP_CATEGORY = "category";
+    private static final String APP_SUMMARY = "summary";
+    private static final String APP_IMAGE_SMALL = "small";
+    private static final String APP_IMAGE_MEDIUM = "medium";
+    private static final String APP_IMAGE_LARGE = "large";
     private Context ctx;
 
 
@@ -52,7 +48,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        ctx=context;
+        ctx = context;
     }
 
     @Override
@@ -64,35 +60,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         String CREATE_APP_TABLE = "CREATE TABLE " + TABLE_APPS + "("
                 + APP_NAME + " TEXT PRIMARY KEY," + APP_CATEGORY + " TEXT,"
-                + APP_SUMMARY+" TEXT,"+APP_IMAGE_SMALL+" BLOB,"+APP_IMAGE_MEDIUM+" BLOB,"+APP_IMAGE_LARGE
-                +" BLOB,"+" FOREIGN KEY ("+APP_CATEGORY+") REFERENCES "+TABLE_CATEGORIES+"("+CATEGORY_NAME+"))";
+                + APP_SUMMARY + " TEXT," + APP_IMAGE_SMALL + " BLOB," + APP_IMAGE_MEDIUM + " BLOB," + APP_IMAGE_LARGE
+                + " BLOB," + " FOREIGN KEY (" + APP_CATEGORY + ") REFERENCES " + TABLE_CATEGORIES + "(" + CATEGORY_NAME + "))";
         sqLiteDatabase.execSQL(CREATE_APP_TABLE);
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_CATEGORIES);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_APPS);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORIES);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_APPS);
 
         onCreate(sqLiteDatabase);
     }
 
     //CRUD Operations
-    public void addCategory(Category category){
-
-        /*
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        Bitmap bitmap;
-        byte[] logo;
-
-        if(android.os.Build.VERSION.SDK_INT <= 21)
-            bitmap = ((BitmapDrawable) ctx.getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap();
-        else
-            bitmap = ((BitmapDrawable) ctx.getDrawable(R.mipmap.ic_launcher)).getBitmap();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        logo = baos.toByteArray();
-        category.setLogo(logo);*/
+    public void addCategory(Category category) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -104,7 +87,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void addApp(App app){
+    public void addApp(App app) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(APP_NAME, app.getName());
@@ -118,48 +101,48 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public ArrayList<Category> getAllCategories(){
-        ArrayList<Category> categoryList= new ArrayList<Category>();
+    public ArrayList<Category> getAllCategories() {
+        ArrayList<Category> categoryList = new ArrayList<Category>();
 
-        String selectQuery="SELECT * FROM "+TABLE_CATEGORIES;
+        String selectQuery = "SELECT * FROM " + TABLE_CATEGORIES;
 
-        SQLiteDatabase db= this.getWritableDatabase();
-        Cursor cursor=db.rawQuery(selectQuery,null);
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
-        if(cursor.moveToFirst()){
-            do{
-                Category category= new Category();
+        if (cursor.moveToFirst()) {
+            do {
+                Category category = new Category();
                 category.setName(cursor.getString(0));
                 category.setLogo(cursor.getBlob(1));
                 categoryList.add(category);
-            } while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
 
         return categoryList;
     }
 
 
-    public App getApp(String name){
-        SQLiteDatabase db=this.getReadableDatabase();
+    public App getApp(String name) {
+        SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor=db.query(TABLE_APPS,null,APP_NAME+"=?",new String[]{name},null,null,null);
-        if(cursor!=null)
+        Cursor cursor = db.query(TABLE_APPS, null, APP_NAME + "=?", new String[]{name}, null, null, null);
+        if (cursor != null)
             cursor.moveToFirst();
 
-        App app=new App(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getBlob(3),cursor.getBlob(4),cursor.getBlob(5));
+        App app = new App(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getBlob(3), cursor.getBlob(4), cursor.getBlob(5));
         return app;
     }
 
-    public ArrayList<App> getAppsByCategory(String category){
+    public ArrayList<App> getAppsByCategory(String category) {
 
-        ArrayList<App> appList= new ArrayList<App>();
-        SQLiteDatabase db=this.getReadableDatabase();
+        ArrayList<App> appList = new ArrayList<App>();
+        SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor=db.query(TABLE_APPS,null,APP_CATEGORY+"=?",new String[]{category},null,null,APP_NAME+" ASC");
+        Cursor cursor = db.query(TABLE_APPS, null, APP_CATEGORY + "=?", new String[]{category}, null, null, APP_NAME + " ASC");
 
-        if(cursor.moveToFirst()){
-            do{
-                App app= new App();
+        if (cursor.moveToFirst()) {
+            do {
+                App app = new App();
                 app.setName(cursor.getString(0));
                 app.setCategory(cursor.getString(1));
                 app.setSummary(cursor.getString(2));
@@ -167,40 +150,39 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 app.setMedium(cursor.getBlob(4));
                 app.setLarge(cursor.getBlob(5));
                 appList.add(app);
-            } while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
         return appList;
 
     }
 
-    public boolean isCategoryInserted(String category){
-        SQLiteDatabase db=this.getReadableDatabase();
-        Cursor cursor=db.query(TABLE_CATEGORIES,null,CATEGORY_NAME+"=?",new String[]{category},null,null,null);
+    public boolean isCategoryInserted(String category) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_CATEGORIES, null, CATEGORY_NAME + "=?", new String[]{category}, null, null, null);
 
-        if(cursor.getCount()>0){
+        if (cursor.getCount() > 0) {
             return true;
         }
         return false;
     }
 
-    public boolean isAppInserted(String app){
-        SQLiteDatabase db=this.getReadableDatabase();
-        Cursor cursor=db.query(TABLE_APPS,null,APP_NAME+"=?",new String[]{app},null,null,null);
+    public boolean isAppInserted(String app) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_APPS, null, APP_NAME + "=?", new String[]{app}, null, null, null);
 
-        if(cursor.getCount()>0){
+        if (cursor.getCount() > 0) {
             return true;
         }
         return false;
     }
 
-    public boolean databaseExist(){
+    public boolean databaseExist() {
         SQLiteDatabase checkDB = null;
         try {
             checkDB = SQLiteDatabase.openDatabase(String.valueOf(ctx.getDatabasePath(DATABASE_NAME)), null, SQLiteDatabase.OPEN_READONLY);
             checkDB.close();
             return true;
-        }
-        catch(SQLiteException e) {
+        } catch (SQLiteException e) {
 
         }
         return false;

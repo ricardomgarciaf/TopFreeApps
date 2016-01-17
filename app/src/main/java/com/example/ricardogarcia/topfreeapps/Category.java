@@ -1,8 +1,7 @@
 package com.example.ricardogarcia.topfreeapps;
 
-import java.sql.Blob;
-
 /**
+ * Represents a category with its name and logo
  * Created by ricardogarcia on 1/14/16.
  */
 public class Category {
@@ -14,7 +13,6 @@ public class Category {
 
     public Category(String name) {
         this.name = name;
-        //Default logo
     }
 
     public Category(String name, byte[] logo) {
