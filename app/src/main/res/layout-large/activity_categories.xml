@@ -8,12 +8,23 @@
     tools:context="com.example.ricardogarcia.topfreeapps.Categories"
     >
 
+    <TextView
+        android:id="@+id/titleCategories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/margin_top"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAllCaps="true"
+        android:text="@string/title_categories"/>
+
     <LinearLayout
         android:id="@+id/emptyView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
-        android:paddingTop="@dimen/margin_top">
+        android:paddingTop="@dimen/margin_top"
+        android:layout_below="@+id/titleCategories">
         <TextView
             android:id="@+id/textNoResults"
             android:layout_width="wrap_content"
@@ -34,7 +45,8 @@
         android:verticalSpacing="40dp"
         android:numColumns="3"
         android:stretchMode="columnWidth"
-        android:paddingTop="@dimen/margin_top">
+        android:paddingTop="@dimen/margin_top"
+        android:layout_below="@+id/titleCategories">
     </GridView>
 
 </RelativeLayout>

@@ -1,10 +1,13 @@
 package com.example.ricardogarcia.topfreeapps;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,11 +84,20 @@ public class AppAdapter extends BaseAdapter{
 
 
             v.setOnClickListener(new View.OnClickListener() {
+                @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onClick(View v) {
                     Intent intent= new Intent(activity,AppDescription.class);
                     intent.putExtra(APP, apps.get(position));
-                    activity.startActivity(intent);
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        ActivityOptionsCompat options = ActivityOptionsCompat.
+                                makeSceneTransitionAnimation(activity, (View)v, "imageApp");
+                        activity.startActivity(intent, options.toBundle());
+                    }
+                    else {
+                        activity.startActivity(intent);
+                    }
                 }
             });
         }
