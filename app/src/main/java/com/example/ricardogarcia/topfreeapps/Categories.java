@@ -73,7 +73,7 @@ public class Categories extends AppCompatActivity {
 
         @Override
         protected ArrayList<Category> doInBackground(String... strings) {
-            ArrayList<Category> categories = new ArrayList<Category>();
+            ArrayList<Category> categories = new ArrayList<>();
             DatabaseHandler db = DatabaseHandler.getInstance(Categories.this);
             String status = strings[0];
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ricardogarcia.topfreeapps" >
+    package="com.example.ricardogarcia.topfreeapps">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -10,28 +10,29 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".Splash"
-            android:screenOrientation="nosensor"
-            android:configChanges="keyboardHidden|orientation|screenSize" >
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".Splash"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Categories"
-            android:screenOrientation="nosensor"
-            android:configChanges="keyboardHidden|orientation|screenSize" >
-        </activity>
-        <activity android:name=".Apps"
-            android:screenOrientation="nosensor"
-            android:configChanges="keyboardHidden|orientation|screenSize" >
-        </activity>
-        <activity android:name=".AppDescription"
-            android:screenOrientation="nosensor"
-            android:configChanges="keyboardHidden|orientation|screenSize" >
-        </activity>
+        <activity
+            android:name=".Categories"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".Apps"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".AppDescription"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="nosensor" />
     </application>
 
 </manifest>

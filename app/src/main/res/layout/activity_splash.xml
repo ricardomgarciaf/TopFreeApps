@@ -1,35 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#000" >
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.ricardogarcia.topfreeapps.MainActivity">
 
-    <ImageView
-        android:id="@+id/imgLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@mipmap/ic_launcher" />
+    <include layout="@layout/content_splash" />
 
-    <TextView
-        android:id="@+id/textLogo"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_top"
-        android:layout_below="@id/imgLogo"
-        android:textSize="@dimen/splash_text_height"
-        android:textColor="@color/white"
-        android:gravity="center"
-        android:text="@string/splash_text"/>
-
-    <ProgressBar
-        android:id="@+id/pb"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        style="@android:style/Widget.ProgressBar.Inverse"
-        android:layout_below="@+id/textLogo"
-        android:visibility="invisible"
-        android:layout_marginTop="@dimen/margin_top"
-     />
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

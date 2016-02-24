@@ -73,7 +73,7 @@ public class Apps extends AppCompatActivity {
 
         @Override
         protected ArrayList<App> doInBackground(String... strings) {
-            ArrayList<App> apps = new ArrayList<App>();
+            ArrayList<App> apps;
             DatabaseHandler db = DatabaseHandler.getInstance(Apps.this);
             String category = strings[0];
 

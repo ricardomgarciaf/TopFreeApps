@@ -1,53 +1,12 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@drawable/wallpaper"
-    tools:context="com.example.ricardogarcia.topfreeapps.Apps">
+    android:fitsSystemWindows="true"
+    tools:context="com.example.ricardogarcia.topfreeapps.MainActivity">
 
-    <TextView
-        android:id="@+id/titleCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/margin_top"
-        android:layout_centerHorizontal="true"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <include layout="@layout/content_apps" />
 
-    <LinearLayout
-        android:id="@+id/emptyView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/margin_top"
-        android:layout_below="@+id/titleCategory">
-        <TextView
-            android:id="@+id/textNoResults"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingTop="@dimen/margin_top"
-            android:text="@string/no_results_text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-    </LinearLayout>
-
-    <ListView
-        android:id="@+id/view_apps"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_top"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:layout_centerInParent = "true"
-        android:paddingTop="@dimen/margin_top"
-        android:layout_below="@+id/titleCategory"/>
-
-
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
