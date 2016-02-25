@@ -183,9 +183,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             checkDB.close();
             return true;
         } catch (SQLiteException e) {
-
+            return false;
         }
-        return false;
     }
 
 }

@@ -1,10 +1,13 @@
 package com.example.ricardogarcia.topfreeapps;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView;
@@ -87,10 +90,27 @@ public class Categories extends AppCompatActivity {
         protected void onPostExecute(ArrayList<Category> categories) {
             super.onPostExecute(categories);
 
-            CategoryAdapter cAdapter = new CategoryAdapter(Categories.this, categories);
-            viewCategories = (AbsListView) findViewById(R.id.view_categories);
-            viewCategories.setAdapter(cAdapter);
-            viewCategories.setEmptyView(findViewById(R.id.emptyView));
+
+
+            if(categories.size()>0) {
+                CategoryAdapter cAdapter = new CategoryAdapter(Categories.this, categories);
+                viewCategories = (AbsListView) findViewById(R.id.view_categories);
+                viewCategories.setAdapter(cAdapter);
+            }
+            else{
+
+                AlertDialog.Builder builder= new AlertDialog.Builder(Categories.this);
+                builder.setMessage(R.string.no_connection_text)
+                        .setTitle(R.string.no_connection_title_text)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                System.exit(0);
+                            }
+                        });
+                builder.setCancelable(false);
+                builder.show();
+            }
 
         }
     }
