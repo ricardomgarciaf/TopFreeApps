@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Splash"
+            android:name=".activities.Splash"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="nosensor">
             <intent-filter>
@@ -22,17 +22,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Categories"
+            android:name=".activities.Categories"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="nosensor" />
         <activity
-            android:name=".Apps"
+            android:name=".activities.Apps"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="nosensor" />
         <activity
-            android:name=".AppDescription"
+            android:name=".activities.AppDescription"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="nosensor" />
+        <activity android:name=".activities.SearchActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
+        <meta-data android:name="android.app.default_searchable"
+            android:value=".activities.SearchActivity" />
     </application>
 
 </manifest>

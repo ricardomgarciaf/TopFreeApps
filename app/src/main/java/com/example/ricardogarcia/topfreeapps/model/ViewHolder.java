@@ -1,4 +1,4 @@
-package com.example.ricardogarcia.topfreeapps;
+package com.example.ricardogarcia.topfreeapps.model;
 
 import android.widget.ImageView;
 import android.widget.TextView;

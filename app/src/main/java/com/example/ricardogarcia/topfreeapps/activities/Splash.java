@@ -1,4 +1,4 @@
-package com.example.ricardogarcia.topfreeapps;
+package com.example.ricardogarcia.topfreeapps.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,10 +10,13 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+
+import com.example.ricardogarcia.topfreeapps.R;
+import com.example.ricardogarcia.topfreeapps.db.DatabaseHandler;
+import com.example.ricardogarcia.topfreeapps.model.App;
+import com.example.ricardogarcia.topfreeapps.model.Category;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,30 +54,6 @@ public class Splash extends AppCompatActivity {
         new FetchData().execute();
 
     }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_splash, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     /*
         Fetchs the data from the URL in case there is connection to the Internet, updating those records that
         are not in the DB
@@ -139,6 +118,10 @@ public class Splash extends AppCompatActivity {
 
                         JSONObject summary = entry.optJSONObject("summary");
                         String label_summary = summary.optString("label");
+
+                        JSONObject artist=entry.optJSONObject("im:artist");
+                        String label_artist=artist.optString("label");
+
                         JSONObject category = entry.optJSONObject("category");
                         JSONObject attributes = category.optJSONObject("attributes");
                         String label_category = attributes.optString("label");
@@ -148,7 +131,7 @@ public class Splash extends AppCompatActivity {
                             db.addCategory(new Category(label_category, null));
 
                         if (!db.isAppInserted(label_name)) {
-                            App app = new App(label_name, label_category, label_summary, getImageFromURL(dir_images[0]), getImageFromURL(dir_images[1]), getImageFromURL(dir_images[2]));
+                            App app = new App(label_name, label_category, label_summary,label_artist,getImageFromURL(dir_images[0]), getImageFromURL(dir_images[1]), getImageFromURL(dir_images[2]));
                             db.addApp(app);
                         }
 

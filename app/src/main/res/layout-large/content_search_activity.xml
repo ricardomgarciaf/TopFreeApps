@@ -8,7 +8,6 @@
     android:background="@color/white"
     tools:context=".activities.Apps">
 
-
     <LinearLayout
         android:id="@+id/emptyView"
         android:layout_width="fill_parent"
@@ -35,8 +34,8 @@
         android:overScrollMode="never"
         android:numColumns="3"
         android:scrollbars="none"
-        android:paddingTop="@dimen/top_listview"
-        android:stretchMode="columnWidth">
+        android:stretchMode="columnWidth"
+        android:paddingTop="@dimen/margin_top">
     </GridView>
 
 

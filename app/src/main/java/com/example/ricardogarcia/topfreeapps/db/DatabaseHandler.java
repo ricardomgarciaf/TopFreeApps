@@ -1,4 +1,4 @@
-package com.example.ricardogarcia.topfreeapps;
+package com.example.ricardogarcia.topfreeapps.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.ricardogarcia.topfreeapps.model.App;
+import com.example.ricardogarcia.topfreeapps.model.Category;
 
 import java.util.ArrayList;
 
@@ -33,6 +36,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String APP_NAME = "name";
     private static final String APP_CATEGORY = "category";
     private static final String APP_SUMMARY = "summary";
+    private static final String APP_OWNER="owner";
     private static final String APP_IMAGE_SMALL = "small";
     private static final String APP_IMAGE_MEDIUM = "medium";
     private static final String APP_IMAGE_LARGE = "large";
@@ -60,7 +64,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         String CREATE_APP_TABLE = "CREATE TABLE " + TABLE_APPS + "("
                 + APP_NAME + " TEXT PRIMARY KEY," + APP_CATEGORY + " TEXT,"
-                + APP_SUMMARY + " TEXT," + APP_IMAGE_SMALL + " BLOB," + APP_IMAGE_MEDIUM + " BLOB," + APP_IMAGE_LARGE
+                + APP_SUMMARY + " TEXT," + APP_OWNER +" TEXT,"+APP_IMAGE_SMALL + " BLOB," + APP_IMAGE_MEDIUM + " BLOB," + APP_IMAGE_LARGE
                 + " BLOB," + " FOREIGN KEY (" + APP_CATEGORY + ") REFERENCES " + TABLE_CATEGORIES + "(" + CATEGORY_NAME + "))";
         sqLiteDatabase.execSQL(CREATE_APP_TABLE);
 
@@ -93,10 +97,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(APP_NAME, app.getName());
         values.put(APP_CATEGORY, app.getCategory());
         values.put(APP_SUMMARY, app.getSummary());
+        values.put(APP_OWNER,app.getOwner());
         values.put(APP_IMAGE_SMALL, app.getSmall());
         values.put(APP_IMAGE_MEDIUM, app.getMedium());
         values.put(APP_IMAGE_LARGE, app.getLarge());
-
         db.insert(TABLE_APPS, null, values);
         db.close();
     }
@@ -129,8 +133,33 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        App app = new App(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getBlob(3), cursor.getBlob(4), cursor.getBlob(5));
+        App app = new App(cursor.getString(0), cursor.getString(1), cursor.getString(2),cursor.getString(3), cursor.getBlob(4), cursor.getBlob(5), cursor.getBlob(6));
         return app;
+    }
+
+    public ArrayList<App> searchApps(String appname){
+        ArrayList<App> appList = new ArrayList<App>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = " SELECT * FROM "+TABLE_APPS+" WHERE "+APP_NAME+" LIKE  '%"
+                + appname
+                + "%' ";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                App app = new App();
+                app.setName(cursor.getString(0));
+                app.setCategory(cursor.getString(1));
+                app.setSummary(cursor.getString(2));
+                app.setOwner(cursor.getString(3));
+                app.setSmall(cursor.getBlob(4));
+                app.setMedium(cursor.getBlob(5));
+                app.setLarge(cursor.getBlob(6));
+                appList.add(app);
+            } while (cursor.moveToNext());
+        }
+        return appList;
     }
 
     public ArrayList<App> getAppsByCategory(String category) {
@@ -146,9 +175,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 app.setName(cursor.getString(0));
                 app.setCategory(cursor.getString(1));
                 app.setSummary(cursor.getString(2));
-                app.setSmall(cursor.getBlob(3));
-                app.setMedium(cursor.getBlob(4));
-                app.setLarge(cursor.getBlob(5));
+                app.setOwner(cursor.getString(3));
+                app.setSmall(cursor.getBlob(4));
+                app.setMedium(cursor.getBlob(5));
+                app.setLarge(cursor.getBlob(6));
                 appList.add(app);
             } while (cursor.moveToNext());
         }

@@ -2,12 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/white"
     tools:context=".activities.Apps">
-
 
     <LinearLayout
         android:id="@+id/emptyView"
@@ -25,19 +24,15 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ListView
         android:id="@+id/view_apps"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:columnWidth="150dp"
-        android:horizontalSpacing="10dp"
-        android:verticalSpacing="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_top"
+        android:divider="@null"
+        android:dividerHeight="30dp"
         android:overScrollMode="never"
-        android:numColumns="3"
         android:scrollbars="none"
-        android:paddingTop="@dimen/top_listview"
-        android:stretchMode="columnWidth">
-    </GridView>
-
+        android:paddingTop="@dimen/top_listview"/>
 
 </RelativeLayout>

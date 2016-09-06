@@ -1,23 +1,32 @@
-package com.example.ricardogarcia.topfreeapps;
+package com.example.ricardogarcia.topfreeapps.activities;
 
 import android.app.AlertDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView;
+import android.widget.Toast;
+
+import com.example.ricardogarcia.topfreeapps.R;
+import com.example.ricardogarcia.topfreeapps.adapter.CategoryAdapter;
+import com.example.ricardogarcia.topfreeapps.db.DatabaseHandler;
+import com.example.ricardogarcia.topfreeapps.model.Category;
 
 import java.util.ArrayList;
 
 /*
     Activity that shows the list/grid of categories, calling the adapter and retrieving the information from the database
  */
-public class Categories extends AppCompatActivity {
+public class Categories extends AppCompatActivity{
 
     AbsListView viewCategories;
 
@@ -25,6 +34,11 @@ public class Categories extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
+
+        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        setTitle(getResources().getString(R.string.title_categories));
 
         if (getResources().getBoolean(R.bool.portrait_mode)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -35,6 +49,10 @@ public class Categories extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
 
+        if(b.getString(Splash.INFO_CONNECTION).equals("No Update")){
+            Toast.makeText(getApplicationContext(),getResources().getString(R.string.conexionoffline),Toast.LENGTH_LONG).show();
+        }
+
         new RetrieveFromDatabase().execute(b.getString(Splash.INFO_CONNECTION));
     }
 
@@ -42,7 +60,14 @@ public class Categories extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_categories, menu);
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
         return true;
     }
 

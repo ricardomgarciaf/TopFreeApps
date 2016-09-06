@@ -1,4 +1,4 @@
-package com.example.ricardogarcia.topfreeapps;
+package com.example.ricardogarcia.topfreeapps.model;
 
 import java.io.Serializable;
 
@@ -8,20 +8,22 @@ import java.io.Serializable;
  */
 public class App implements Serializable {
 
-    String name;
-    String category;
-    String summary;
-    byte[] small;
-    byte[] medium;
-    byte[] large;
+    private String name;
+    private String category;
+    private String summary;
+    private String owner;
+    private byte[] small;
+    private byte[] medium;
+    private byte[] large;
 
     public App() {
     }
 
-    public App(String name, String category, String summary, byte[] small, byte[] medium, byte[] large) {
+    public App(String name, String category, String summary, String owner,byte[] small, byte[] medium, byte[] large) {
         this.name = name;
         this.category = category;
         this.summary = summary;
+        this.owner=owner;
         this.small = small;
         this.medium = medium;
         this.large = large;
@@ -49,6 +51,14 @@ public class App implements Serializable {
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public byte[] getSmall() {

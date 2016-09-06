@@ -1,4 +1,4 @@
-package com.example.ricardogarcia.topfreeapps;
+package com.example.ricardogarcia.topfreeapps.model;
 
 /**
  * Represents a category with its name and logo

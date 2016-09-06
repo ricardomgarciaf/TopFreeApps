@@ -3,7 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="splash_text_height">20dp</dimen>
-    <dimen name="margin_top">10dp</dimen>
+    <dimen name="margin_top">20dp</dimen>
+    <dimen name="top_listview">30dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="grid_text_size">15dp</dimen>
+    <dimen name="grid_text_size">18sp</dimen>
 </resources>

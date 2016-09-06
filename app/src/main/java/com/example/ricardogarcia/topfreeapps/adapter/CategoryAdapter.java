@@ -1,4 +1,4 @@
-package com.example.ricardogarcia.topfreeapps;
+package com.example.ricardogarcia.topfreeapps.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +13,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.ricardogarcia.topfreeapps.R;
+import com.example.ricardogarcia.topfreeapps.activities.Apps;
+import com.example.ricardogarcia.topfreeapps.model.Category;
+import com.example.ricardogarcia.topfreeapps.model.ViewHolder;
 
 import java.util.List;
 

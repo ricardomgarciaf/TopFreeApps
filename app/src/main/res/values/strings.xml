@@ -8,10 +8,14 @@
     <string name="title_activity_app_description">AppDescription</string>
     <string name="splash_text">Welcome to Top Free Apps</string>
     <string name="title_activity_display_categories">DisplayCategories</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="no_results_text">No categories found</string>
+    <string name="no_results_categories_text">No categories found</string>
+    <string name="no_results_apps_text">No apps found</string>
     <string name="title_categories">Categories</string>
-    <string name="no_connection_text">Problemas con la conexión. Intente nuevamente.</string>
+    <string name="no_connection_text">Network problems. Try again please</string>
     <string name="no_connection_title_text">Error</string>
     <string name="ok">Ok</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="buscar">Search</string>
+    <string name="search_resultstitle">Results for</string>
+    <string name="conexionoffline">Offline mode</string>
 </resources>
