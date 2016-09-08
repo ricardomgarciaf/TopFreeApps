@@ -3,6 +3,7 @@ package com.example.ricardogarcia.topfreeapps.activities;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -30,31 +31,38 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_activity);
 
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        if(Build.VERSION.SDK_INT>=21) {
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
-        if(!Categories.pref.getBoolean(Categories.STATUS_CONNECTION,false)){
-            TextView textnoconexion= (TextView) findViewById(R.id.noconnectiontitle);
-            textnoconexion.setVisibility(View.VISIBLE);
-        }
 
         Intent intent=getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             setTitle(getResources().getString(R.string.search_resultstitle)+" "+query);
+
+            if(!Categories.pref.getBoolean(Categories.STATUS_CONNECTION,false)){
+                TextView textnoconexion= (TextView) findViewById(R.id.noconnectiontitle);
+                textnoconexion.setVisibility(View.VISIBLE);
+                if(Build.VERSION.SDK_INT<21) {
+                    setTitle(getResources().getString(R.string.search_resultstitle)+" "+query+" - "+getResources().getString(R.string.conexionoffline));
+                }
+            }
+
             new RetrieveFromDatabase().execute(query);
         }
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
     }
 
     /*

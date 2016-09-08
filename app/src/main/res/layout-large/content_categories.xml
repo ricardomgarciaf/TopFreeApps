@@ -16,6 +16,7 @@
         android:verticalSpacing="40dp"
         android:scrollbars="none"
         android:numColumns="3"
+        android:layout_below="@+id/noconnectiontitle"
         android:overScrollMode="never"
         android:stretchMode="columnWidth"
         android:paddingTop="@dimen/margin_top">

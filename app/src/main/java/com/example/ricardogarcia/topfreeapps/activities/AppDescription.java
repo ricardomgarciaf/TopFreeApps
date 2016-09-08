@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -34,18 +35,14 @@ public class AppDescription extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_description);
 
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        if(Build.VERSION.SDK_INT>=21) {
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+        }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+
 
         if (getResources().getBoolean(R.bool.portrait_mode)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -69,6 +66,9 @@ public class AppDescription extends AppCompatActivity {
         if(!Categories.pref.getBoolean(Categories.STATUS_CONNECTION,false)){
             TextView textnoconexion= (TextView) findViewById(R.id.noconnectiontitle);
             textnoconexion.setVisibility(View.VISIBLE);
+            if(Build.VERSION.SDK_INT<21) {
+                setTitle(getResources().getString(R.string.app_name)+" - "+getResources().getString(R.string.conexionoffline));
+            }
         }
 
         if (app.getLarge() != null) {
@@ -76,6 +76,12 @@ public class AppDescription extends AppCompatActivity {
         }
         summaryApp.setText(app.getSummary());
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
     }
 
     @Override

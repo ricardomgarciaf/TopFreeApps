@@ -13,6 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.Splash"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="nosensor">
             <intent-filter>

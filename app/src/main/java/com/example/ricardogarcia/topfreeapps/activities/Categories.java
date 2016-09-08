@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -45,9 +46,10 @@ public class Categories extends AppCompatActivity{
         pref = getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
 
-
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        if(Build.VERSION.SDK_INT>=21) {
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+        }
 
         setTitle(getResources().getString(R.string.title_categories));
 
@@ -65,6 +67,9 @@ public class Categories extends AppCompatActivity{
             textnoconexion.setVisibility(View.VISIBLE);
             editor.putBoolean(STATUS_CONNECTION,false);
             editor.commit();
+            if(Build.VERSION.SDK_INT<21) {
+                setTitle(getResources().getString(R.string.title_categories)+" - "+getResources().getString(R.string.conexionoffline));
+            }
         }else{
             editor.putBoolean(STATUS_CONNECTION,true);
             editor.commit();

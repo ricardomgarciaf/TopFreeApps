@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -36,18 +37,17 @@ public class Apps extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apps);
 
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        if(Build.VERSION.SDK_INT>=21) {
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+
+
 
         if (getResources().getBoolean(R.bool.portrait_mode)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -55,20 +55,29 @@ public class Apps extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
 
-        if(!Categories.pref.getBoolean(Categories.STATUS_CONNECTION,false)){
-            TextView textnoconexion= (TextView) findViewById(R.id.noconnectiontitle);
-            textnoconexion.setVisibility(View.VISIBLE);
-        }
-
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
 
         setTitle(b.getString(CategoryAdapter.CATEGORY));
+
+        if(!Categories.pref.getBoolean(Categories.STATUS_CONNECTION,false)){
+            TextView textnoconexion= (TextView) findViewById(R.id.noconnectiontitle);
+            textnoconexion.setVisibility(View.VISIBLE);
+            if(Build.VERSION.SDK_INT<21) {
+                setTitle(b.getString(CategoryAdapter.CATEGORY)+" - "+getResources().getString(R.string.conexionoffline));
+            }
+        }
+
         new RetrieveFromDatabase().execute(b.getString(CategoryAdapter.CATEGORY));
 
 
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
