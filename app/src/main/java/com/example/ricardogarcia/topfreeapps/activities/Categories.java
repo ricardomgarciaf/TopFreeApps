@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,8 +14,9 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AbsListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.ricardogarcia.topfreeapps.R;
 import com.example.ricardogarcia.topfreeapps.adapter.CategoryAdapter;
@@ -28,12 +30,21 @@ import java.util.ArrayList;
  */
 public class Categories extends AppCompatActivity{
 
+    public static final String PREF_NAME = "SessionPreferences";
+    public static int PRIVATE_MODE = 0;
     AbsListView viewCategories;
+    public static SharedPreferences pref;
+    public static SharedPreferences.Editor editor;
+    public static String STATUS_CONNECTION="STATUS_CONNECTION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
+
+        pref = getSharedPreferences(PREF_NAME, PRIVATE_MODE);
+        editor = pref.edit();
+
 
         Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,7 +61,13 @@ public class Categories extends AppCompatActivity{
         Bundle b = intent.getExtras();
 
         if(b.getString(Splash.INFO_CONNECTION).equals("No Update")){
-            Toast.makeText(getApplicationContext(),getResources().getString(R.string.conexionoffline),Toast.LENGTH_LONG).show();
+            TextView textnoconexion= (TextView) findViewById(R.id.noconnectiontitle);
+            textnoconexion.setVisibility(View.VISIBLE);
+            editor.putBoolean(STATUS_CONNECTION,false);
+            editor.commit();
+        }else{
+            editor.putBoolean(STATUS_CONNECTION,true);
+            editor.commit();
         }
 
         new RetrieveFromDatabase().execute(b.getString(Splash.INFO_CONNECTION));

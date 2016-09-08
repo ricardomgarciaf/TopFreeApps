@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relative"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#000"
     tools:context=".activities.Splash">
+
+
+    <!--<com.github.jorgecastillo.FillableLoader-->
+        <!--android:id="@+id/fillableLoader"-->
+        <!--android:layout_width="200dp"-->
+        <!--android:layout_height="100dp"-->
+        <!--app:fl_originalWidth="15"-->
+        <!--app:fl_originalHeight="15"-->
+        <!--app:fl_strokeColor="@color/white"-->
+        <!--app:fl_fillColor="@color/white"-->
+        <!--app:fl_strokeWidth="10dp"-->
+        <!--app:fl_strokeDrawingDuration="2000"-->
+        <!--app:fl_fillDuration="5000"-->
+        <!--app:fl_clippingTransform="waves"-->
+        <!--app:fl_fillPercentage="10"-->
+        <!--/>-->
 
     <ImageView
         android:id="@+id/imgLogo"

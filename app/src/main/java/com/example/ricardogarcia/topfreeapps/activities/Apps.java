@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.TextView;
 
 import com.example.ricardogarcia.topfreeapps.R;
 import com.example.ricardogarcia.topfreeapps.adapter.AppAdapter;
@@ -52,6 +53,11 @@ public class Apps extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+
+        if(!Categories.pref.getBoolean(Categories.STATUS_CONNECTION,false)){
+            TextView textnoconexion= (TextView) findViewById(R.id.noconnectiontitle);
+            textnoconexion.setVisibility(View.VISIBLE);
         }
 
         Intent intent = getIntent();

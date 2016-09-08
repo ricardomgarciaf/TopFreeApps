@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.TextView;
 
 import com.example.ricardogarcia.topfreeapps.R;
 import com.example.ricardogarcia.topfreeapps.adapter.AppAdapter;
@@ -41,6 +42,11 @@ public class SearchActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        if(!Categories.pref.getBoolean(Categories.STATUS_CONNECTION,false)){
+            TextView textnoconexion= (TextView) findViewById(R.id.noconnectiontitle);
+            textnoconexion.setVisibility(View.VISIBLE);
+        }
 
         Intent intent=getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {

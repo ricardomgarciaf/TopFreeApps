@@ -18,4 +18,5 @@
     <string name="buscar">Search</string>
     <string name="search_resultstitle">Results for</string>
     <string name="conexionoffline">Offline mode</string>
+    <string name="offlinemode">Offline mode</string>
 </resources>

@@ -19,6 +19,15 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+        <TextView
+            android:id="@+id/noconnectiontitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/conexionoffline"
+            android:visibility="gone"
+            android:gravity="center_horizontal"
+            android:background="@color/error_color"/>
+
     </android.support.design.widget.AppBarLayout>
 
 

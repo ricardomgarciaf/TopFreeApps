@@ -66,6 +66,11 @@ public class AppDescription extends AppCompatActivity {
         categoryApp.setText(app.getCategory());
         ownerApp.setText(app.getOwner());
 
+        if(!Categories.pref.getBoolean(Categories.STATUS_CONNECTION,false)){
+            TextView textnoconexion= (TextView) findViewById(R.id.noconnectiontitle);
+            textnoconexion.setVisibility(View.VISIBLE);
+        }
+
         if (app.getLarge() != null) {
             imageView.setImageBitmap(BitmapFactory.decodeByteArray(app.getLarge(), 0, app.getLarge().length));
         }
